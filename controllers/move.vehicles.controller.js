@@ -1,12 +1,34 @@
 const dbConn = require('db/db');
-export class MoveVehiclesController {
+const moveVehicles = dbConn.connection.import('../models/vehiculos');
+const moveVehiclesController = class MoveVehiclesController {
     constructor() {
 
     }
 
     listMoves(req, res){
         try{
+            moveVehicles.findAll().then(
+                (result) => {
+                    res.status(200).send({ message: 'Operacion realizada', data: result});
+                }
+            ).catch((err) => {
+                throw err;
+            });
+        }catch (e) {
+            console.log('Error:::: ',e);
+            res.status(500).send('Internal server error');
+        }
+    }
 
+    listVehiclesByMove(req, res){
+        try{
+            moveVehicles.findAll({where: req.params.id}).then(
+                (result) => {
+                    res.status(200).send({ message: 'Operacion realizada', data: result});
+                }
+            ).catch((err) => {
+                throw err;
+            });
         }catch (e) {
             console.log('Error:::: ',e);
             res.status(500).send('Internal server error');
@@ -15,7 +37,13 @@ export class MoveVehiclesController {
 
     createMove(req, res){
         try{
-
+            moveVehicles.create(req.body).then(
+                (result) => {
+                    res.status(200).send({ message: 'Operacion realizada', data: result});
+                }
+            ).catch((err) => {
+                throw err;
+            });
         }catch (e) {
             console.log('Error:::: ',e);
             res.status(500).send('Internal server error');
@@ -39,4 +67,4 @@ export class MoveVehiclesController {
     }
 }
 
-export const moveVehiclesController = new MoveVehiclesController();
+module.exports = new moveVehiclesController;
