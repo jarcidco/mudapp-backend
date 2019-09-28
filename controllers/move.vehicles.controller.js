@@ -22,7 +22,7 @@ const moveVehiclesController = class MoveVehiclesController {
 
     listVehiclesByMove(req, res){
         try{
-            moveVehicles.findAll({where: req.params.id}).then(
+            moveVehicles.findAll({where: {id_trasteo: req.params.id}}).then(
                 (result) => {
                     res.status(200).send({ message: 'Operacion realizada', data: result});
                 }

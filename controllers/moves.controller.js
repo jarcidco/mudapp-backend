@@ -16,7 +16,7 @@ const movesController = class MovesController {
 
     getMovesByUser(req, res){
         try{
-            Moves.findAll({ where: req.params.idUser}).then(
+            Moves.findAll({ where: {id_usuario: req.params.idUser}}).then(
                 (result) => {
                     res.status(200).send({ message: 'Operacion realizada', data: result});
                 }
